@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 필수 속성이다. : dao 식별하기 위한 이름 -->
+<mapper namespace="com.wad.udo.member.dao.MemberSessionDao">
+	<insert id="insertMember"
+		parameterType="com.wad.udo.member.domain.MemberInfo">
+		insert into member (id, pw, name, email, phone, photo,
+		code) values (#{id}, #{pw}, #{name}, #{email}, #{phone}, #{photo},
+		#{code})
+	</insert>
+
+	<select id="selectMemberById"
+		resultType="com.wad.udo.member.domain.MemberInfo">
+		select * from member where id = #{param1}
+
+	</select>
+
+	<select id="selectMemberByEmail"
+		resultType="com.wad.udo.member.domain.MemberInfo">
+		select * from member where email = #{param1}
+
+	</select>
+
+
+	<select id="selectLoginMember"
+		resultType="com.wad.udo.member.domain.MemberInfo">
+		select * from member where id = #{param1}
+	</select>
+
+	<update id="updateMember"
+		parameterType="com.wad.udo.member.domain.MemberInfo">
+		update member set name = #{name}, email = #{email},
+		phone = #{phone}, photo = #{photo} where idx = #{idx}
+	</update>
+
+	<update id="updateMemberPw"
+		parameterType="com.wad.udo.member.domain.RequestPwUpdate">
+		update member set pw = #{updatePw1} where idx =
+		#{updateIdx}
+	</update>
+
+	<select id="selectAllList"
+		resultType="com.wad.udo.member.domain.MemberInfo">
+		select * from member order by name
+	</select>
+
+	<update id="verify">
+		update member set verify='Y' where id=#{param1} and
+		code=#{param2}
+	</update>
+
+	<select id="searchId"
+		resultType="com.wad.udo.member.domain.MemberInfo">
+		select * from member where name = #{param1} and email =
+		#{param2}
+	</select>
+
+	<select id="searchPw"
+		resultType="com.wad.udo.member.domain.MemberInfo">
+		select * from member where id = #{param1} and name =
+		#{param2} and email =
+		#{param3}
+	</select>
+
+	<update id="changeRandomPw">
+		update member set pw = #{param1} where id = #{param2}
+	</update>
+
+	<delete id="deleteMember">
+		delete from member where idx = #{idx}
+	</delete>
+
+
+	<!-- <select id="selectTotalCount" resultType="int"> select count(*) from 
+		member <where> <if test="stype != null"> <if test="stype == 'both'"> uid 
+		LIKE CONCAT('%', #{keyword}, '%') or uname LIKE CONCAT('%', #{keyword}, '%') 
+		</if> <if test="stype == 'id'"> uid LIKE CONCAT('%', #{keyword}, '%') </if> 
+		<if test="stype == 'name'"> uname LIKE CONCAT('%', #{keyword}, '%') </if> 
+		</if> </where> </select> -->
+	<!-- <select id="selectList" parameterType="map" resultType="com.baek.mm.member.domain.MemberInfo"> 
+		SELECT * FROM member <where> <if test="search != null"> <if test="search.stype 
+		== 'both'"> <include refid="whereId" /> <include refid="whereName" /> uid 
+		LIKE CONCAT('%', #{search.keyword}, '%') or uname LIKE CONCAT('%', #{search.keyword}, 
+		'%') </if> <if test="search.stype == 'id'"> <include refid="whereId" /> uid 
+		LIKE CONCAT('%', #{search.keyword}, '%') </if> <if test="search.stype == 
+		'name'"> <include refid="whereName" /> uname LIKE CONCAT('%', #{search.keyword}, 
+		'%') </if> </if> </where> limit #{param1}, #{param2} limit #{index}, #{cnt_list} 
+		</select> -->
+
+	<!-- <sql id="whereId"> or uid LIKE CONCAT('%', #{search.keyword}, '%') 
+		</sql> <sql id="whereName"> or uname LIKE CONCAT('%', #{search.keyword}, 
+		'%') </sql> -->
+
+	<!-- 전체 회원 리스트 구하기 -->
+	<!-- <select id="selectAllList" resultType="com.baek.mm.member.domain.MemberInfo"> 
+		select * from member order by uname </select> <update id="verify"> update 
+		member set verify='Y' where uid=#{param1} and code=#{param2} </update> <select 
+		id="selectMemberById_uName" resultType="com.baek.mm.member.domain.MemberInfo"> 
+		select * from member where uid = #{param1} and uname = #{param2} </select> -->
+
+
+</mapper>
